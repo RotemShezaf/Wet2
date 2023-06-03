@@ -3,14 +3,14 @@
 
 #include "utilesWet2.h"
 
-
+#include "unionFind.h"
 
 class RecordsCompany {
   private:
-    // todo
+      UnionFind  records;
   public:
-    RecordsCompany();
-    ~RecordsCompany();
+    RecordsCompany() = default;
+    ~RecordsCompany() = default;
     StatusType newMonth(int *records_stocks, int number_of_records);
     StatusType addCostumer(int c_id, int phone);
     Output_t<int> getPhone(int c_id);
