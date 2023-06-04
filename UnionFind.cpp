@@ -23,7 +23,7 @@ void UnionFind::newMonth(int* records_stocks, int number_of_records) {
 		throw;
 	}
 	for (int i = 0; i < number_of_records; i++) {
-		records[i].inStock = records_stocks[i];
+		groups[i].height = records_stocks[i];
 		groups[i].culomn = i;
 	}
 	size = number_of_records;
@@ -38,13 +38,15 @@ UnionFind::UnionFind(int* records_stocks, int number_of_records) {
 int UnionFind::findGroup(int r_id,  int* hight) {
 	int i = r_id;
 	int exstra = 0;
+	int head;
 	int substruct_exstra = 0;
-	while ( i != EMPTY && records[i].parent != EMPTY) {
+	while ( i != EMPTY  && records[i].parent != EMPTY) {
 		exstra += records[i].extra;
+		
 		i = records[i].parent;
 	}
-	int head = i;
-	*hight = exstra;
+	head = i;
+	*hight = exstra + records[i].extra;
 	i = r_id;
 	while (i != EMPTY && records[i].parent != EMPTY) {
 		records[i].parent = head;
@@ -68,30 +70,30 @@ StatusType UnionFind::putOnTop(int r_id1, int r_id2) {
 
 	int  height1 = 0,  height2 = 0;
 	int group_id1 = findGroup(r_id1, &height1), group_id2 = findGroup(r_id2, &height2);
-	Group group1 = groups[group_id1];
-	Group group2 = groups[group_id2];
 
 	if (group_id1 == group_id2) {
 		return FAILURE;
 	}
 
-	if ( group1.size < group2.size ) {
-		records[r_id1].parent = r_id2;
-		records[r_id1].extra += height2 - records[r_id2].extra;
-		group2.size += group1.size;
-		group1.size = 0;
-		if (group1.culomn > group2.culomn)
-			group2.culomn = group1.culomn;
+	if ( groups[group_id1].size < groups[group_id2].size ) {
+		records[group_id1].parent = group_id2;
+		records[group_id1].extra += groups[group_id2].height - records[group_id2].extra;
+		groups[group_id2].size += groups[group_id1].size;
+		groups[group_id2].height += groups[group_id1].height;
+		groups[group_id1].size = 0;
+		if (groups[group_id1].culomn > groups[group_id2].culomn)
+			groups[group_id2].culomn = groups[group_id1].culomn;
 	}
 
-	if ( group1.size > group2.size ) {
-		records[r_id2].parent = r_id1;
-		records[r_id1].extra += height2;
-		records[r_id2].extra -= records[r_id1].extra;
-		group1.size += group2.size;
-		group2.size = 0;
-		if (group2.culomn > group1.culomn)
-			group1.culomn = group2.culomn;
+	if ( groups[group_id1].size >= groups[group_id2].size ) {
+		records[group_id2].parent = group_id1;
+		records[group_id1].extra += groups[group_id2].height;
+		records[group_id2].extra -= records[group_id1].extra;
+		groups[group_id1].size += groups[group_id2].size;
+		groups[group_id1].height += groups[group_id2].height;
+		groups[group_id2].size = 0;
+		if (groups[group_id2].culomn > groups[group_id1].culomn)
+			groups[group_id1].culomn = groups[group_id2].culomn;
 	}
 
 	return SUCCESS;

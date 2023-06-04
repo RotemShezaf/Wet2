@@ -4,6 +4,12 @@ putOnTop 28 37
 getPlace 3
 getPlace 28
 getPlace 37
+newMonth 3 [2 3 4]
+putOnTop 0 1
+putOnTop 0 2
+getPlace 0
+getPlace 1
+getPlace 2
 newMonth 6 [10 5 2 9 11 2]
 putOnTop 3 5
 putOnTop 4 5

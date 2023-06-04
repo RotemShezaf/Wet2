@@ -30,15 +30,16 @@ class UnionFind::Record {
 		int parent = EMPTY;
 		int buys = 0;
 		int extra = 0;  
-		int inStock = 0;
-		Record() : buys(0), extra(0), inStock(), parent(EMPTY) {};
+		Record() : buys(0), extra(0), parent(EMPTY) {};
 };
 
 class UnionFind::Group {
 	public:
 		int culomn = EMPTY;
 		int size = 1;
-		Group() : culomn(0), size(0){};
+		int height = 0;
+		Group() : culomn(EMPTY), size(1), height(0)
+			 {};
 };
 
 #endif // UNION_FIND_H_
