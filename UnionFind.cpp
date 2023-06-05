@@ -10,7 +10,7 @@ void UnionFind::newMonth(int* records_stocks, int number_of_records) {
 	if (number_of_records < 0) {
 		throw  std::invalid_argument("number_of_records must be positive");
 	}
-	if (size = EMPTY) {
+	if (size != EMPTY) {
 		delete[] groups;
 		delete[] records;
 	}
@@ -35,25 +35,35 @@ UnionFind::UnionFind(int* records_stocks, int number_of_records) {
 }
 
 
-int UnionFind::findGroup(int r_id,  int* hight) {
+int UnionFind::findGroup(int r_id,  int* hight) {//find like in union find with 
 	int i = r_id;
 	int exstra = 0;
 	int head;
 	int substruct_exstra = 0;
+
+	//find group and hight
 	while ( i != EMPTY  && records[i].parent != EMPTY) {
 		exstra += records[i].extra;
 		
 		i = records[i].parent;
 	}
+	//the group index
 	head = i;
+
 	*hight = exstra + records[i].extra;
 	i = r_id;
+
+	//records[i] "points to group" - his index in the arrey is the same as the group. put hom as the parent of everyone
 	while (i != EMPTY && records[i].parent != EMPTY) {
+		int parent = records[i].parent;
 		records[i].parent = head;
+
+		//fix exstra
 		substruct_exstra = records[i].extra;
 		records[i].extra = exstra ;
 		exstra -= substruct_exstra;
-		i = records[i].parent;
+
+		i = parent;
 	}
 	return head;
 }
@@ -75,25 +85,34 @@ StatusType UnionFind::putOnTop(int r_id1, int r_id2) {
 		return FAILURE;
 	}
 
-	if ( groups[group_id1].size < groups[group_id2].size ) {
-		records[group_id1].parent = group_id2;
-		records[group_id1].extra += groups[group_id2].height - records[group_id2].extra;
-		groups[group_id2].size += groups[group_id1].size;
-		groups[group_id2].height += groups[group_id1].height;
-		groups[group_id1].size = 0;
+	if ( groups[group_id1].size < groups[group_id2].size ) { 
+		//union(group_id1, group_id2) like in union find
+		records[group_id1].parent = group_id2;  
 		if (groups[group_id1].culomn > groups[group_id2].culomn)
 			groups[group_id2].culomn = groups[group_id1].culomn;
+		groups[group_id2].height += groups[group_id1].height;
+		groups[group_id1].size = 0;
+		//changing exstra s.t sum over extra in the search group roun gives height
+		records[group_id1].extra += groups[group_id2].height - records[group_id2].extra;
+		groups[group_id2].size += groups[group_id1].size;
+
+
 	}
 
 	if ( groups[group_id1].size >= groups[group_id2].size ) {
-		records[group_id2].parent = group_id1;
-		records[group_id1].extra += groups[group_id2].height;
-		records[group_id2].extra -= records[group_id1].extra;
-		groups[group_id1].size += groups[group_id2].size;
-		groups[group_id1].height += groups[group_id2].height;
+		// union(group_id1, group_id2) like in union find
+		records[group_id2].parent = group_id1; 
 		groups[group_id2].size = 0;
 		if (groups[group_id2].culomn > groups[group_id1].culomn)
 			groups[group_id1].culomn = groups[group_id2].culomn;
+		groups[group_id1].size += groups[group_id2].size;
+		groups[group_id1].height += groups[group_id2].height;
+
+		// changing exstra s.t sum over extra in the search group roun gives height
+		records[group_id1].extra += groups[group_id2].height;
+		records[group_id2].extra -= records[group_id1].extra;
+
+
 	}
 
 	return SUCCESS;
