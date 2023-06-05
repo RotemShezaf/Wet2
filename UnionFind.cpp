@@ -113,3 +113,25 @@ StatusType UnionFind::getPlace(int r_id, int* column, int* hight) {
 	*column = group.culomn;
 	return SUCCESS;
 }
+
+int& UnionFind::operator[](int  r_id) {
+	if (r_id >= size) {
+		throw std::out_of_range("no such record");
+	}
+	if (r_id < 0) {
+		throw std::invalid_argument("no such record");
+	}
+	return records[r_id].buys;
+}
+
+int UnionFind::buyRecord(int r_id) {
+	if (r_id >= size) {
+		throw std::out_of_range("no such record");
+	}
+	if (r_id < 0) {
+		throw std::invalid_argument("no such record");
+	}
+	int temp = records[r_id].buys;
+	records[r_id].buys++;
+	return temp;
+}

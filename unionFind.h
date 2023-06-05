@@ -18,11 +18,12 @@ public:
 	void newMonth(int* records_stocks, int number_of_records);
 	StatusType getPlace(int r_id, int* column, int* hight);
 	UnionFind(int* records_stocks, int number_of_records);
-	UnionFind( const UnionFind& other);
+	UnionFind( const UnionFind& other) = delete;
 	UnionFind() = default;
 	~UnionFind();
 	StatusType putOnTop(int r_id1, int r_id2);
-	StatusType buyRecord(int r_id);
+	int& operator[](int  r_id);
+	int buyRecord(int r_id);
 };
 
 class UnionFind::Record {
