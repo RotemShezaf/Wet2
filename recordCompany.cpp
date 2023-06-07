@@ -32,6 +32,7 @@ StatusType RecordsCompany::makeMember(int c_id){
     try {
         //TODO insert into members
     } catch (std::bad_alloc &) {
+        customers.unmember_latest();
         return ALLOCATION_ERROR;
     }
     return SUCCESS;
