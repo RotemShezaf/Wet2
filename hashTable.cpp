@@ -192,10 +192,10 @@ StatusType HashTable::add_customer(int c_id, int phone)
     if(c_id < 0 || phone < 0) {
         return INVALID_INPUT;
     }
-    Node *node = find(customers[hash(c_id)], c_id);
-    if (node != nullptr) {
+    if(size != 0 && find(customers[hash(c_id)], c_id) != nullptr) {
         return ALREADY_EXISTS;
     }
+    Node *node;
     try {
         if (size == customer_count) {
             expand();
