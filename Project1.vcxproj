@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="rankTree.h" />
     <ClInclude Include="recordsCompany.h" />
     <ClInclude Include="unionFind.h" />
     <ClInclude Include="utilesWet2.h" />

@@ -17,7 +17,7 @@ vector<int> getRecordsStocks();
 
 int main()
 {
-    freopen("example_test.in", "r", stdin);
+    freopen("example2.txt", "r", stdin);
     freopen("out.txt", "w", stdout);
   string op;
   RecordsCompany *test_obj = new RecordsCompany();

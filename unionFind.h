@@ -28,10 +28,10 @@ public:
 
 class UnionFind::Record {
 	public :
-		int parent = EMPTY; //an index in the records arrey.  "pointer" to the next record in the group search route - the record in the index. 
-		//if EMPTY, pointing to the group with the same index as record index
 		int buys = 0;
 		int extra = 0;  //sum over exstra in the group find track gives height
+		int parent = EMPTY; //an index in the records arrey.  "pointer" to the next record in the group search route - the record in the index. 
+		//if EMPTY, pointing to the group with the same index as record index
 		Record() : buys(0), extra(0), parent(EMPTY) {};
 };
 

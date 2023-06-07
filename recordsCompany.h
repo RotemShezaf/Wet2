@@ -4,10 +4,12 @@
 #include "utilesWet2.h"
 
 #include "unionFind.h"
+#include "rankTree.h"
 
 class RecordsCompany {
   private:
       UnionFind  records;
+      RankTree<int, int> club_members;
   public:
     RecordsCompany() = default;
     ~RecordsCompany() = default;

@@ -18,7 +18,6 @@ StatusType RecordsCompany::newMonth(int* records_stocks, int number_of_records) 
 };
 	
 StatusType RecordsCompany::addCostumer(int c_id, int phone){
-    //TO DO
 	return SUCCESS;
 };
 Output_t<int> RecordsCompany::getPhone(int c_id){
@@ -26,6 +25,7 @@ Output_t<int> RecordsCompany::getPhone(int c_id){
 	return SUCCESS;
 };
 StatusType RecordsCompany::makeMember(int c_id){
+	club_members.insert(c_id, c_id);
 	//TO DO
 	return SUCCESS;
 };
@@ -34,7 +34,8 @@ Output_t<bool> RecordsCompany::isMember(int c_id){
 	return SUCCESS;
 };
 StatusType RecordsCompany::buyRecord(int c_id, int r_id){
-	int t;
+	int t =0;
+	t++;
 	try {
 		t = records[r_id];
 		records[r_id]++;
@@ -49,12 +50,26 @@ StatusType RecordsCompany::buyRecord(int c_id, int r_id){
 	return SUCCESS;
 };
 StatusType RecordsCompany::addPrize(int c_id1, int c_id2, double  amount){
-	//TO DO
+	if (amount <= 0 || c_id1 < 0 || c_id1 > c_id2) {
+		return INVALID_INPUT;
+	}
+	club_members.add_rank(c_id2, amount);
+	club_members.add_rank(c_id1, -amount);
 	return SUCCESS;
 };
 Output_t<double> RecordsCompany::getExpenses(int c_id) {
-	//TO DO
-	return SUCCESS;
+	if ( c_id < 0 ) {
+		return INVALID_INPUT;
+	}
+	int result;
+	try {
+		result = club_members.get_rank(c_id);
+	}
+	catch (KeyNotFound&) {
+		return StatusType::FAILURE;
+	}
+	
+	return result;
 };
 StatusType RecordsCompany::putOnTop(int r_id1, int r_id2){
 	return records.putOnTop(r_id1, r_id2);

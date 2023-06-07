@@ -1,7 +1,7 @@
-#ifndef AVL_TREE_
-#define AVL_TREE_
+#ifndef AVL_RankTree_
+#define AVL_RankTree_
 
-#include "wet1util.h"
+#include "utilesWet2.h"
 
 #define HEIGHT(nodeptr) ((nodeptr) ? ((nodeptr)->_height) : -1)
 
@@ -20,21 +20,22 @@ public:
 };
 
 template<class Key, class Value>
-struct Tree {
+struct RankTree {
     struct Node {
         Key _key;
         Value _value;
         int _height;
-        int rank = 0;
         Node *_left;
         Node *_right;
+        int _rank = 0;
 
-        Node(const Key &key, const Value &value) :
+        Node(const Key &key, const Value &value, int rank) :
             _key(key),
             _value(value),
             _height(0),
             _left(nullptr),
-            _right(nullptr)
+            _right(nullptr),
+            _rank(rank)
         {}
 
         static void clear(Node *node)
@@ -67,12 +68,12 @@ struct Tree {
                 throw KeyNotFound();
             }
             if (key < node->_key) {
-                return get_rank(node->_left, key);
+                return get_rank(node->_left, key) + node->_rank;
             }
             if (node->_key < key) {
-                return get_rank(node->_right, key);
+                return get_rank(node->_right, key) + node->_rank;
             }
-            return node;
+            return node->_rank;
         }
 
         static void keys_inorder(const Node *node, Key **keys)
@@ -85,7 +86,7 @@ struct Tree {
             keys_inorder(node->_left, keys);
         }
 
-        // returns the new root of the subtree.
+        // returns the new root of the subRankTree.
         // may throw KeyAlreadyExists.
         static Node *insert(Node *node, const Key &key, const Value &value, int rank)
         {
@@ -94,17 +95,17 @@ struct Tree {
             }
 
             if (key < node->_key) {
-                node->_left = insert(node->_left, key, value, rank - node->rank );
+                node->_left = insert(node->_left, key, value, rank - node->_rank );
                 return node ->rebalance();
             }
             if (node->_key < key) {
-                node->_right = insert(node->_right, key, value, rank - node->rank);
+                node->_right = insert(node->_right, key, value, rank - node->_rank);
                 return node ->rebalance();
             }
             throw KeyAlreadyExists();
         }
 
-        // returns the new root of the subtree.
+        // returns the new root of the subRankTree.
         // may throw KeyNotFound.
         static Node *remove(Node *node, const Key &key)
         {
@@ -152,15 +153,16 @@ struct Tree {
             _height = max + 1;
         }
 
-        // returns the new root of the subtree.
+        // returns the new root of the subRankTree.
         Node *l_l_roll()
         {
-
-            Node *root = _left;
-
-            left->_right->rank += left->rank;
-            left->rank += this->rank;
-            this->rank -= root->rank;
+            Node * root = _left;
+            if (_left->_right != nullptr) {
+                _left->_right += _left->_rank;
+            }
+            
+            _left->_rank += this->_rank;
+            this->_rank -= root->_rank;
 
             _left = _left->_right;
             root->_right = this;
@@ -169,7 +171,7 @@ struct Tree {
             return root;
         }
 
-        // returns the new root of the subtree.
+        // returns the new root of the subRankTree.
         Node *l_r_roll()
         {
             _left = _left->r_r_roll();
@@ -186,23 +188,25 @@ struct Tree {
             //return root;
         }
 
-        // returns the new root of the subtree.
+        // returns the new root of the subRankTree.
         Node *r_r_roll()
         {
             Node *root = _right;
+            
+
+            if (_right->_left != nullptr) {
+                _right->_left->_rank += _right->_rank;
+            }
+            _right->_rank += this->_rank;
+            this->_rank -= root->_rank;   
             _right = _right->_left;
-
-            _right->_left->rank += _right->rank;
-            right->rank += this->rank;
-            this->rank -= root->rank;   
-
             root->_left = this;
             set_height();
             root->set_height();
             return root;
         }
 
-        // returns the new root of the subtree.
+        // returns the new root of the subRankTree.
         Node *r_l_roll()
         {
             _right = _right->l_l_roll();
@@ -223,7 +227,7 @@ struct Tree {
             return HEIGHT(_left) - HEIGHT(_right);
         }
 
-        // returns the new root of the subtree.
+        // returns the new root of the subRankTree.
         Node *rebalance()
         {
             int balance = get_balance();
@@ -243,9 +247,9 @@ struct Tree {
             return this;
         }
 
-        // next (output) is set by the function to point to the first node lexicoraphically in the subtree.
-        // that node is extracted from the subtree.
-        // returns the new root of the subtree.
+        // next (output) is set by the function to point to the first node lexicoraphically in the subRankTree.
+        // that node is extracted from the subRankTree.
+        // returns the new root of the subRankTree.
         Node *extract_next(Node **next)
         {
             if (!_left) {
@@ -258,49 +262,53 @@ struct Tree {
     };
 
 
-    Tree() :
+    RankTree() :
         _root(nullptr),
         _first(nullptr),
         _size(0)
     {}
 
     // may throw KeyNotFound.
-    Value& find(const Key &key)
+    Value& find(const Key& key)
     {
         return Node::find(_root, key)->_value;
-    
+    }
 
     int get_rank(const Key & key)
     {
         return Node::get_rank(_root, key);
     }
 
-    int add_rank(const Key& key, int amount)
+    void add_rank(const Key& key, int amount)
     {
         Node * node = _root;
         bool is_right_sequence = false;
-        if (!node) {
-            throw KeyNotFound();
-        }
         while (node != nullptr) {
             if (key < node->_key) {
                 if (is_right_sequence) {
-                    node->rank -= amount;
+                    node->_rank -= amount;
                     is_right_sequence = false;
                 }
-                node = node->left;
+                node = node->_left;
             }
-            if (node->_key < key) {
+            else if (node->_key < key) {
                 if (!is_right_sequence) {
-                    node->rank += amount;
+                    node->_rank += amount;
                     is_right_sequence = true;
                 }
-                node = node->right;
+                node = node->_right;
+            }
+            else if (node->_key == key) {
+                if (is_right_sequence) {
+                    node->_rank -= amount;
+                }
+                if (node->_left)
+                    node->_left += amount;
+                return;
             }
         }
 
-        return node;
-
+        return ;
 
     }
 
@@ -344,7 +352,7 @@ struct Tree {
         set_first();
     }
 
-    ~Tree()
+    ~RankTree()
     {
         Node::clear(_root);
     }
@@ -359,14 +367,14 @@ struct Tree {
         Node* _first;
         int _size;
 
-    void set_first()
-    {
-        if (!_root) {
-            _first = nullptr;
-            return;
+        void set_first()
+        {
+            if (!_root) {
+                _first = nullptr;
+                return;
+            }
+            for (_first = _root; _first->_right; _first = _first->_right);
         }
-        for (_first = _root; _first->_right; _first = _first->_right);
-    }
 };
 
-#endif // AVL_TREE_
+#endif // AVL_RankTree_
