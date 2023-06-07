@@ -136,7 +136,7 @@ struct RankTree {
                 return root;
             }
             // both children exist
-            Node *next;
+            Node * next;
             node->_right = node->_right->extract_next(&next);
             next->_left = node->_left;
             next->_right = node->_right;

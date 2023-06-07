@@ -139,12 +139,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="hashTable.h" />
     <ClInclude Include="rankTree.h" />
     <ClInclude Include="recordsCompany.h" />
     <ClInclude Include="unionFind.h" />
     <ClInclude Include="utilesWet2.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="hashTable.cpp" />
     <ClCompile Include="mainWet2.cpp" />
     <ClCompile Include="recordCompany.cpp" />
     <ClCompile Include="UnionFind.cpp" />

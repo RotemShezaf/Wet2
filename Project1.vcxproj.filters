@@ -27,6 +27,9 @@
     <ClInclude Include="rankTree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="hashTable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="mainWet2.cpp">
@@ -36,6 +39,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="recordCompany.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="hashTable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
