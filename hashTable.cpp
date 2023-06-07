@@ -17,7 +17,8 @@ HashTable::Node::Node(int c_id, int phone) :
 HashTable::HashTable() :
     size(0),
     customer_count(0),
-    customers(nullptr)
+    customers(nullptr),
+    latest_member(nullptr)
 {}
 
 HashTable::~HashTable()
@@ -25,6 +26,7 @@ HashTable::~HashTable()
     for(int i = 0; i < size; ++i) {
         clear(customers[i]);
     }
+    delete [] customers;
 }
 
 void HashTable::clear(Node *node)
@@ -90,6 +92,7 @@ StatusType HashTable::make_member(int c_id)
         return ALREADY_EXISTS;
     }
     node->customer.member = true;
+    latest_member = node;
     return SUCCESS;
 }
 
@@ -148,6 +151,7 @@ StatusType HashTable::add_customer(int c_id, int phone)
     }
     int h = hash(c_id);
     customers[h] = insert(customers[h], node);
+    customer_count++;
     return SUCCESS;
 }
 
@@ -245,4 +249,9 @@ HashTable::Node *HashTable::rl_roll(Node *node)
     set_height(temp);
     set_height(root);
     return root;
+}
+
+void HashTable::unmember_latest()
+{
+    latest_member->customer.member = false;
 }
