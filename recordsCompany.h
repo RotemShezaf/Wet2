@@ -1,13 +1,12 @@
 #ifndef RECORDS_COMPANY_H
 #define RECORDS_COMPANY_H
 
-#include "utilesWet2.h"
-
 #include "unionFind.h"
-
+#include "hashTable.h"
 class RecordsCompany {
   private:
-      UnionFind  records;
+      UnionFind records;
+      HashTable customers;
   public:
     RecordsCompany() = default;
     ~RecordsCompany() = default;

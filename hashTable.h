@@ -36,6 +36,7 @@ class HashTable {
     int size;
     int customer_count;
     Node **customers;
+    Node *latest_member;
 
     public:
     HashTable();
@@ -44,6 +45,7 @@ class HashTable {
     Output_t<int> get_phone(int c_id) const;
     StatusType make_member(int c_id);
     Output_t<bool> is_member(int c_id) const;
+    void unmember_latest();
 };
 
 #endif //HASH_TABLE_H
