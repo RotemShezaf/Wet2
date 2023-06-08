@@ -396,3 +396,34 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+Project1.vcxproj.filters
+Project1.vcxproj.user
+Project1.vcxproj
+Project1.sln
+x64/Debug/ConsoleA.93eefbaa.tlog/CL.command.1.tlog
+x64/Debug/ConsoleA.93eefbaa.tlog/CL.read.1.tlog
+x64/Debug/ConsoleA.93eefbaa.tlog/CL.write.1.tlog
+x64/Debug/ConsoleA.93eefbaa.tlog/link.command.1.tlog
+x64/Debug/ConsoleA.93eefbaa.tlog/link.read.1.tlog
+x64/Debug/ConsoleA.93eefbaa.tlog/link.write.1.tlog
+x64/Debug/Project1.exe
+x64/Debug/Project1.ilk
+x64/Debug/Project1.log
+x64/Debug/Project1.pdb
+x64/Debug/StreamingDBa1.obj
+x64/Debug/vc143.idb
+x64/Debug/vc143.pdb
+.vs/Project1/v17/.suo
+.vs/Project1/v17/Browse.VC.db
+*.exe
+inFiles/
+outFiles/
+prog
+tester.sh
+out.txt
+prog
+tester.sh
+a.out
+.vs/
+x64/

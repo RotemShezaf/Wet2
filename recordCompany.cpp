@@ -26,6 +26,7 @@ StatusType RecordsCompany::addCostumer(int c_id, int phone){
 Output_t<int> RecordsCompany::getPhone(int c_id){
     return customers.get_phone(c_id);
 };
+
 StatusType RecordsCompany::makeMember(int c_id){
     StatusType result = customers.make_member(c_id);
     if(result != SUCCESS) {

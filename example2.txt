@@ -1,3 +1,9 @@
+addCostumer 9 1108
+addCostumer 5 94069
+addCostumer 10 1108
+addCostumer 13 94069
+addCostumer 20 1108
+addCostumer 30 9406
 makeMember 9
 makeMember 5
 makeMember 10
