@@ -44,12 +44,18 @@ StatusType RecordsCompany::makeMember(int c_id){
 Output_t<bool> RecordsCompany::isMember(int c_id){
     return customers.is_member(c_id);
 };
+
 StatusType RecordsCompany::buyRecord(int c_id, int r_id){
 	int t =0;
 	t++;
+	if (c_id < 0) {
+		return INVALID_INPUT;
+	}
 	try {
 		t = records[r_id];
 		records[r_id]++;
+		club_members.add_rank(c_id + 1, t);
+		club_members.add_rank(c_id, -t);
 	}
 	catch ( std::invalid_argument&) {
 		return INVALID_INPUT;
