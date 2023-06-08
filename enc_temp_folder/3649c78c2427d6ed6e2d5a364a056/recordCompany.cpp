@@ -53,7 +53,7 @@ StatusType RecordsCompany::buyRecord(int c_id, int r_id){
 		return INVALID_INPUT;
 	}
 	try {
-		t = records[r_id] + 100;
+		t = records[r_id];
 		records[r_id]++;
 		club_members.add_rank(c_id + 1, t);
 		club_members.add_rank(c_id, -t);
