@@ -48,6 +48,16 @@ struct RankTree {
             delete node;
         }
 
+        static void clear_rank(Node* node)
+        {
+            if (node == nullptr) {
+                return;
+            }
+            clear_rank(node->_left);
+            clear_rank(node->_right);
+            node->_rank = 0;
+        }
+
         static Node *find(Node *node, const Key &key)
         {
             if (!node) {
@@ -309,6 +319,14 @@ struct RankTree {
         }
 
         return ;
+
+    }
+
+    void clear_rank_info()
+    {
+        
+        Node::clear_rank(_root);
+        return;
 
     }
 
