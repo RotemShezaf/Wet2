@@ -1,0 +1,53 @@
+addCostumer 1 1108
+addCostumer 2 94069
+addCostumer 3 1108
+addCostumer 4 94069
+addCostumer 5 1108
+addCostumer 6 94069
+addCostumer 7 1108
+addCostumer 8 94069
+addCostumer 9 1108
+addCostumer 10 94069
+addCostumer 11 1108
+addCostumer 12 94069
+addCostumer 13 1108
+addCostumer 14 94069
+addCostumer 15 1108
+addCostumer 16 94069
+makeMember 1
+addPrize 1 2 5
+makeMember 2
+makeMember 3
+addPrize 2 7 4
+makeMember 4
+makeMember 5
+addPrize 7 8 4
+makeMember 6
+makeMember 7
+makeMember 8
+addPrize 4 9 1
+makeMember 9
+makeMember 10
+makeMember 11
+addPrize 6 11 2
+makeMember 12
+makeMember 13
+addPrize 5 13 4
+makeMember 14
+makeMember 15
+makeMember 16
+addPrize 9 16 8
+getExpenses 1
+getExpenses 2
+getExpenses 3
+getExpenses 4
+getExpenses 5
+getExpenses 6
+getExpenses 7
+getExpenses 8
+getExpenses 9
+getExpenses 10
+getExpenses 11
+getExpenses 12
+getExpenses 15
+getExpenses 16

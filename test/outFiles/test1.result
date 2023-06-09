@@ -1,0 +1,26 @@
+newMonth: SUCCESS
+putOnTop: SUCCESS
+putOnTop: SUCCESS
+getPlace: column=37, hight=12
+getPlace: column=37, hight=1
+getPlace: column=37, hight=0
+newMonth: SUCCESS
+putOnTop: SUCCESS
+putOnTop: SUCCESS
+getPlace: column=2, hight=7
+getPlace: column=2, hight=4
+getPlace: column=2, hight=0
+newMonth: SUCCESS
+putOnTop: SUCCESS
+putOnTop: SUCCESS
+getPlace: column=5, hight=2
+getPlace: column=5, hight=11
+getPlace: column=5, hight=0
+putOnTop: SUCCESS
+putOnTop: SUCCESS
+getPlace: column=2, hight=7
+getPlace: column=2, hight=2
+getPlace: column=2, hight=0
+getPlace: INVALID_INPUT
+getPlace: DOESNT_EXISTS
+putOnTop: FAILURE
