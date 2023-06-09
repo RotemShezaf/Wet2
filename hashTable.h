@@ -19,8 +19,8 @@ class HashTable {
         Node(int c_id, int phone);
         ~Node();
     };
-    int get_height(Node *node);
-    int get_balance(Node *node);
+    int get_height(Node *node) const;
+    int get_balance(Node *node) const;
     void set_height(Node *node);
     Node *ll_roll(Node *node);
     Node *lr_roll(Node *node);
@@ -32,6 +32,10 @@ class HashTable {
     void move_over(Node *node);
     void expand();
     int hash(int c_id) const;
+#ifdef TEST
+    bool is_valid(Node *node) const;
+    void print_node(Node *node, int space) const;
+#endif //TEST
 
     int size;
     int customer_count;
@@ -46,6 +50,11 @@ class HashTable {
     StatusType make_member(int c_id);
     Output_t<bool> is_member(int c_id) const;
     void unmember_latest();
+
+#ifdef TEST
+    bool is_valid() const;
+    void print() const;
+#endif //TEST
 };
 
 #endif //HASH_TABLE_H

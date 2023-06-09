@@ -1,5 +1,9 @@
 #include "hashTable.h"
 #include <new>
+#ifdef TEST
+#include <algorithm>
+#include <iostream>
+#endif
 
 HashTable::Customer::Customer(int c_id, int phone) :
     id(c_id),
@@ -35,12 +39,12 @@ HashTable::~HashTable()
     delete [] customers;
 }
 
-int HashTable::get_height(Node *node)
+int HashTable::get_height(Node *node) const
 {
     return (node == nullptr) ? -1 : node->height;
 }
 
-int HashTable::get_balance(Node *node)
+int HashTable::get_balance(Node *node) const
 {
     return get_height(node->left) - get_height(node->right);
 }
@@ -153,7 +157,7 @@ void HashTable::move_over(Node *node)
     move_over(node->right);
     node->left = nullptr;
     node->right = nullptr;
-    node->right = 0;
+    node->height = 0;
     int h = hash(node->customer.id);
     customers[h] = insert(customers[h], node);
 }
@@ -168,9 +172,9 @@ void HashTable::expand()
         return;
     }
     int old_size = size;
-    size *= FACTOR;
     Node **old_customers = customers;
-    customers = new Node*[size];
+    customers = new Node*[size * FACTOR];
+    size = size * FACTOR;
     for(int i = 0; i < size; ++i) {
         customers[i] = nullptr;
     }
@@ -184,6 +188,52 @@ int HashTable::hash(int c_id) const
 {
     return c_id % size;
 }
+
+#ifdef TEST
+
+bool HashTable::is_valid(Node *node) const
+{
+    if(!node) {
+        return true;
+    }
+    int expected = 1 + std::max(get_height(node->left), get_height(node->right));
+    if (node->height != expected) {
+        std::cout << "id: " << node->customer.id
+                  << "\nheight: expected: " << expected
+                  << " actual: " << node->height << '\n';
+        return false;
+    }
+    if (node->left && node->left->customer.id >= node->customer.id) {
+        std::cout << "id: " << node->customer.id
+                  << " left id: " << node->left->customer.id << '\n';
+        return false;
+    }
+    if (node->right && node->right->customer.id <= node->customer.id) {
+        std::cout << "id: " << node->customer.id
+                  << " right id: " << node->right->customer.id << '\n';
+        return false;
+    }
+    if (std::abs(get_balance(node)) > 1) {
+        std::cout << "id: " << node->customer.id
+                  << "\nleft hight: " << get_height(node->left)
+                  << " right hight: " << get_height(node->right) << '\n';
+        return false;
+    }
+    return is_valid(node->left) && is_valid(node->right);
+}
+
+void HashTable::print_node(Node *node, int space) const
+{
+    if (node == nullptr) {
+        return;
+    }
+    print_node(node->left, space + 1);
+    for(int i = 0; i < space; ++i) std::cout << ' ';
+    std::cout << "id: " << node->customer.id << " phone: " << node->customer.phone << '\n';
+    print_node(node->right, space + 1);
+}
+
+#endif //TEST
 
 //==================== public member functions =======================
 
@@ -256,3 +306,28 @@ void HashTable::unmember_latest()
     latest_member->customer.member = false;
     latest_member = nullptr;
 }
+
+#ifdef TEST
+
+bool HashTable::is_valid() const
+{
+    for(int i = 0; i < size; ++i) {
+        if (!is_valid(customers[i])) {
+            std::cout << "at customers[" << i << "]\n";
+            return false;
+        }
+    }
+    return true;
+}
+
+void HashTable::print() const
+{
+    std::cout << "size: " << size
+              << "\nnumber of customers: " << customer_count << '\n';
+    for(int i = 0; i < size; ++i) {
+        std::cout << "custormers[" << i << "]\n";
+        print_node(customers[i], 0);
+    }
+}
+
+#endif //TEST
