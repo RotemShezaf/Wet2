@@ -1,4 +1,4 @@
-#include "UnionFind.h"
+#include "unionFind.h"
 #include <stdexcept>
 
 UnionFind::~UnionFind() {
@@ -13,7 +13,7 @@ void UnionFind::newMonth(int* records_stocks, int number_of_records) {
 		throw  std::invalid_argument("number_of_records must be positive");
 	}
 	Record* temp_records = new Record[number_of_records];
-	Group* temp_groups = new Group[number_of_records];
+	Group* temp_groups ;
 	try {
 		temp_groups = new  Group[number_of_records];
 	}

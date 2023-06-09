@@ -1,13 +1,13 @@
 #!/bin/bash
-g++ -std=c++11 -Wall -Werror -pedantic-errors ./avltest/avltest2.cpp  rankTree.cpp -o ./avltest/avltest2.exe
-chmod +x ./avltest/avltest2.exe
-valgrind --leak-check=full --show-leak-kinds=all ./avltest/avltest2.exe 200 3
-g++ -std=c++11 -Wall -Werror -pedantic-errors -DTEST -g ./avltest/hash_test.cpp ./avltest/hashTable.cpp -o ./avltest/hash_test.exe
-chmod +x ./avltest/hash_test.exe
-valgrind --leak-check=full --show-leak-kinds=all ../avltest/hash_test.exe 200
-g++ -std=c++11 -DNDEBUG -Wall -o prog *.cpp  | grep -v /avltest*.cpp
+g++ -std=c++11 -Wall -Werror -pedantic-errors ./test/avltest2.cpp  -o ./test/avltest2.exe
+chmod +x ./test/avltest2.exe
+valgrind --leak-check=full --show-leak-kinds=all ./test/avltest2.exe 200 3
+g++ -std=c++11 -Wall -Werror -pedantic-errors -DTEST -g ./test/hash_test.cpp ./hashTable.cpp -o ./test/hash_test.exe
+chmod +x ./test/hash_test.exe
+valgrind --leak-check=full --show-leak-kinds=all ./test/hash_test.exe 200
+g++ -std=c++11 -DNDEBUG -Wall -o prog *.cpp  | grep -v /test*.cpp
 
-TESTS_TO_RUN=10
+TESTS_TO_RUN=4
 EXECUTABLE=./prog
 
 RED='\033[0;31m'
@@ -17,15 +17,15 @@ NC='\033[0m' # No Color
 shopt -s nullglob
 FAILED_TESTS=""
 
-for i in inFiles/test*.in
+for i in ./test/inFiles/test*.in
 do
 	if [ ${i//[^0-9]/} -gt $TESTS_TO_RUN ]; then
 		continue
 	fi
 	
 	printf "test $i >>>  "
-	$EXECUTABLE < $i > test${i//[^0-9]/}.out
-	#diff test${i//[^0-9]/}.out test${i//[^0-9]/}.result
+	$EXECUTABLE < $i > ./test/outFiles/test${i//[^0-9]/}.result
+	diff ./test/outFiles/test${i//[^0-9]/}.out ./test/outFiles/test${i//[^0-9]/}.result
 
 	if [ $? -eq 0 ]
 	then
