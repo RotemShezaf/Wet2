@@ -40,7 +40,7 @@ struct RankTree {
 
         static void clear(Node *node)
         {
-            if (!node) {
+            if (node == nullptr) {
                 return;
             }
             clear(node->_left);

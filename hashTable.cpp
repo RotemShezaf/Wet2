@@ -137,9 +137,9 @@ HashTable::Node *HashTable::insert(Node *root, Node *node)
         return node;
     }
     if (node->customer.id < root->customer.id) {
-        node->left = insert(node->left, node);
+        root->left = insert(root->left, node);
     } else {
-        node->right = insert(root->right, node);
+        root->right = insert(root->right, node);
     }
     return rebalance(root);
 }
