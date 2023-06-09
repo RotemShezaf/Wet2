@@ -2,6 +2,7 @@
 #define AVL_RankTree_
 
 #include "utilesWet2.h"
+#include <iostream>
 
 #define HEIGHT(nodeptr) ((nodeptr) ? ((nodeptr)->_height) : -1)
 
@@ -168,7 +169,7 @@ struct RankTree {
         {
             Node * root = _left;
             if (_left->_right != nullptr) {
-                _left->_right += _left->_rank;
+                _left->_right->_rank += _left->_rank;
             }
             
             _left->_rank += this->_rank;
@@ -202,14 +203,16 @@ struct RankTree {
         Node *r_r_roll()
         {
             Node *root = _right;
-            
-
-            if (_right->_left != nullptr) {
-                _right->_left->_rank += _right->_rank;
+            if (root->_key == 10) {
+                int i = 0;
+                i++;
             }
-            _right->_rank += this->_rank;
+            if ( root->_left != nullptr) {
+                root->_left->_rank +=  root->_rank;
+            }
+            root->_rank += this->_rank;
             this->_rank -= root->_rank;   
-            _right = _right->_left;
+            _right =  root->_left;
             root->_left = this;
             set_height();
             root->set_height();
@@ -240,6 +243,8 @@ struct RankTree {
         // returns the new root of the subRankTree.
         Node *rebalance()
         {
+
+
             int balance = get_balance();
             if (balance == 2) {
                 if (_left->get_balance() == -1) {
@@ -313,7 +318,7 @@ struct RankTree {
                     node->_rank -= amount;
                 }
                 if (node->_left)
-                    node->_left += amount;
+                    node->_left->_rank += amount;
                 return;
             }
         }
@@ -375,10 +380,13 @@ struct RankTree {
         Node::clear(_root);
     }
 
-    Node *root() const
+    Node* root() const
     {
         return _root;
-    }
+    };
+
+
+ 
 
     private:
         Node* _root;

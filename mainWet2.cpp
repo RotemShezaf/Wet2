@@ -3,7 +3,7 @@
 #include <string>
 #include <iostream>
 #include <vector>
-#pragma warning(disable:4996)
+//#pragma warning(disable:4996)
 using namespace std;
 
 void print(string cmd, StatusType res);
@@ -17,8 +17,8 @@ vector<int> getRecordsStocks();
 
 int main()
 {
-    freopen("example2.txt", "r", stdin);
-    freopen("out.txt", "w", stdout);
+    freopen("example4.txt", "r", stdin);
+    freopen("out4.txt", "w", stdout);
   string op;
   RecordsCompany *test_obj = new RecordsCompany();
   while (cin >> op)

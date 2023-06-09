@@ -121,15 +121,16 @@ HashTable::Node *HashTable::rebalance(Node *node)
     return node;
 }
 
+
 HashTable::Node *HashTable::find(Node *node, int c_id) const
 {
     if(node == nullptr) {
         return nullptr;
     }
-    if (node->customer.id < c_id) {
+    if (c_id < node->customer.id ) {
         return find(node->left, c_id);
     }
-    if (c_id < node->customer.id) {
+    if ( node->customer.id < c_id) {
         return find(node->right, c_id);
     }
     return node;
@@ -289,7 +290,8 @@ StatusType HashTable::make_member(int c_id)
     if(c_id < 0) {
         return INVALID_INPUT;
     }
-    Node *node = find(customers[hash(c_id)], c_id);
+    int h = hash(c_id);
+    Node *node = find(customers[h], c_id);
     if (node == nullptr) {
         return DOESNT_EXISTS;
     }

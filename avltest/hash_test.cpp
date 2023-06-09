@@ -6,7 +6,7 @@
 #include <algorithm>
 #include <memory>
 #include <assert.h>
-#include "hashTable.h"
+#include "../hashTable.h"
 
 
 void test_table(std::vector<int> &vector)

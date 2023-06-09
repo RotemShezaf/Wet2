@@ -1,0 +1,35 @@
+addCostumer 9 1108
+addCostumer 5 94069
+addCostumer 10 1108
+addCostumer 13 94069
+addCostumer 20 -4
+addCostumer 20 1108
+addCostumer 30 9406
+addCostumer -1 9406
+addCostumer 30 9406
+makeMember 9
+makeMember 5
+makeMember 10
+makeMember 13
+makeMember 20
+makeMember 90
+addPrize 4 18 5
+addPrize 25 60 1
+addPrize 0 12 3
+addPrize -1 18 5
+addPrize 60 20 1
+addPrize 5 999 0
+getExpenses 9
+getExpenses 10
+getExpenses 13
+getExpenses 20
+getExpenses 30
+addPrize 5 20 7
+getExpenses 9
+getExpenses 5
+getExpenses 10
+getExpenses 13
+getExpenses 20
+getExpenses 30
+getExpenses -1
+getExpenses 400
