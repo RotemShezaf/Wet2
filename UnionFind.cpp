@@ -2,26 +2,32 @@
 #include <stdexcept>
 
 UnionFind::~UnionFind() {
-	delete[] records;
-	delete[] groups;
+	if (size != EMPTY) {
+		delete[] records;
+		delete[] groups;
+	}
 }
 
 void UnionFind::newMonth(int* records_stocks, int number_of_records) {
 	if (number_of_records < 0) {
 		throw  std::invalid_argument("number_of_records must be positive");
 	}
+	Record* temp_records = new Record[number_of_records];
+	Group* temp_groups = new Group[number_of_records];
+	try {
+		temp_groups = new  Group[number_of_records];
+	}
+	catch (std::bad_alloc&) {
+		delete[] temp_records;
+		throw;
+	}
 	if (size != EMPTY) {
 		delete[] groups;
 		delete[] records;
 	}
-	records = new Record[number_of_records];
-	try { 
-		groups = new  Group[number_of_records];
-	}
-	catch (std::bad_alloc&) {
-		delete[] records;
-		throw;
-	}
+	records = temp_records;
+	groups = temp_groups;
+
 	for (int i = 0; i < number_of_records; i++) {
 		groups[i].height = records_stocks[i];
 		groups[i].culomn = i;
