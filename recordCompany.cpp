@@ -7,6 +7,7 @@
 StatusType RecordsCompany::newMonth(int* records_stocks, int number_of_records) {
     try {
         records.newMonth(records_stocks ,number_of_records);
+		club_members.clear_rank_info();
     }
     catch (std::invalid_argument&) {
         return StatusType::INVALID_INPUT;
