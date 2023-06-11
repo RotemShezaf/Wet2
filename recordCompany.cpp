@@ -2,8 +2,6 @@
 #include <new>
 
 
-
-
 StatusType RecordsCompany::newMonth(int* records_stocks, int number_of_records) {
     try {
         records.newMonth(records_stocks ,number_of_records);
@@ -48,24 +46,29 @@ Output_t<bool> RecordsCompany::isMember(int c_id){
 };
 
 StatusType RecordsCompany::buyRecord(int c_id, int r_id){
-	int t ;
-	if (c_id < 0) {
-		return INVALID_INPUT;
-	}
+
+	int t;
+	Output_t<bool> result_is_member = customers.is_member(c_id);
 	try {
+		
 		t = records[r_id] + 100;
-		records[r_id]++;
-		club_members.add_rank(c_id + 1, t);
-		club_members.add_rank(c_id, -t);
 	}
 	catch ( std::invalid_argument&) {
 		return INVALID_INPUT;
 	}
 	catch (std::out_of_range&) {
-		return DOESNT_EXISTS;
+		return result_is_member.status();
+	}
+	if(result_is_member..status() == SUCCESS)
+		records[r_id]++;
+
+	if (result_is_member.ans() == true) {
+		club_members.add_rank(c_id + 1, t);
+		club_members.add_rank(c_id, -t);
 	}
 	//TO COMPLETE
 	return SUCCESS;
+
 };
 
 StatusType RecordsCompany::addPrize(int c_id1, int c_id2, double  amount){
@@ -105,5 +108,3 @@ StatusType RecordsCompany::putOnTop(int r_id1, int r_id2){
 StatusType RecordsCompany::getPlace(int r_id, int* column, int* hight){
     return records.getPlace( r_id, column, hight);
 };
-
-
