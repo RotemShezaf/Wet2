@@ -48,8 +48,7 @@ Output_t<bool> RecordsCompany::isMember(int c_id){
 };
 
 StatusType RecordsCompany::buyRecord(int c_id, int r_id){
-	int t =0;
-	t++;
+	int t ;
 	if (c_id < 0) {
 		return INVALID_INPUT;
 	}
@@ -73,8 +72,8 @@ StatusType RecordsCompany::addPrize(int c_id1, int c_id2, double  amount){
 	if (amount <= 0 || c_id1 < 0 || c_id1 > c_id2) {
 		return INVALID_INPUT;
 	}
-	club_members.add_rank(c_id2, amount);
-	club_members.add_rank(c_id1, -amount);
+	club_members.add_rank(c_id2, -amount);
+	club_members.add_rank(c_id1, amount);
 	return SUCCESS;
 };
 
