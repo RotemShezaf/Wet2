@@ -94,8 +94,6 @@ StatusType UnionFind::putOnTop(int r_id1, int r_id2) {
 	if ( groups[group_id1].size < groups[group_id2].size ) { 
 		//union(group_id1, group_id2) like in union find
 		records[group_id1].parent = group_id2;  
-		if (groups[group_id1].culomn > groups[group_id2].culomn)
-			groups[group_id2].culomn = groups[group_id1].culomn;
 		groups[group_id2].height += groups[group_id1].height;
 		groups[group_id1].size = 0;
 		//changing exstra s.t sum over extra in the search group roun gives height
@@ -109,8 +107,7 @@ StatusType UnionFind::putOnTop(int r_id1, int r_id2) {
 		// union(group_id1, group_id2) like in union find
 		records[group_id2].parent = group_id1; 
 		groups[group_id2].size = 0;
-		if (groups[group_id2].culomn > groups[group_id1].culomn)
-			groups[group_id1].culomn = groups[group_id2].culomn;
+		groups[group_id1].culomn = groups[group_id2].culomn;
 		groups[group_id1].size += groups[group_id2].size;
 		groups[group_id1].height += groups[group_id2].height;
 

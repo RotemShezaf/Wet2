@@ -48,18 +48,21 @@ Output_t<bool> RecordsCompany::isMember(int c_id){
 StatusType RecordsCompany::buyRecord(int c_id, int r_id){
 
 	int t;
-	Output_t<bool> result_is_member = customers.is_member(c_id);
+	Output_t<bool>  result_is_member = customers.is_member(c_id);
+	if (result_is_member.status() == INVALID_INPUT)
+		return result_is_member.status();
+
 	try {
-		
 		t = records[r_id] + 100;
 	}
-	catch ( std::invalid_argument&) {
-		return INVALID_INPUT;
+	catch ( std::invalid_argument& ) {
+		return  INVALID_INPUT;
 	}
-	catch (std::out_of_range&) {
-		return result_is_member.status();
+	catch ( std::out_of_range& ) {
+		return  DOESNT_EXISTS;
 	}
-	if(result_is_member..status() == SUCCESS)
+
+	if(result_is_member.status() == SUCCESS)
 		records[r_id]++;
 
 	if (result_is_member.ans() == true) {
@@ -67,7 +70,7 @@ StatusType RecordsCompany::buyRecord(int c_id, int r_id){
 		club_members.add_rank(c_id, -t);
 	}
 	//TO COMPLETE
-	return SUCCESS;
+	return result_is_member.status();
 
 };
 
@@ -90,7 +93,7 @@ Output_t<double> RecordsCompany::getExpenses(int c_id) {
 		result = club_members.get_rank(c_id);
 	}
 	catch (KeyNotFound&) {
-		return StatusType::FAILURE;
+		return StatusType::DOESNT_EXISTS;
 	}
 	
 	return result;
