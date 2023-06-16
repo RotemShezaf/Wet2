@@ -30,4 +30,3 @@ class Output_t {
 
 
 #endif
-

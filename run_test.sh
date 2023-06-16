@@ -17,15 +17,15 @@ NC='\033[0m' # No Color
 shopt -s nullglob
 FAILED_TESTS=""
 
-for i in ./test/inFiles/test*.in
+for i in ./inFiles/test*.in
 do
 	if [ ${i//[^0-9]/} -gt $TESTS_TO_RUN ]; then
 		continue
 	fi
 	
 	printf "test $i >>>  "
-	$EXECUTABLE < $i > ./test/outFiles/test${i//[^0-9]/}.out
-	#diff ./test/outFiles/test${i//[^0-9]/}.out ./test/outFiles/test${i//[^0-9]/}.result
+	$EXECUTABLE < $i > ./outFiles/test${i//[^0-9]/}.result
+	diff ./outFiles/test${i//[^0-9]/}.out ./outFiles/test${i//[^0-9]/}.result
 
 	if [ $? -eq 0 ]
 	then
