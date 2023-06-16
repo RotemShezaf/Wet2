@@ -266,6 +266,9 @@ Output_t<int> HashTable::get_phone(int c_id) const
     if(c_id < 0) {
         return INVALID_INPUT;
     }
+    if (size == 0) {
+        return DOESNT_EXISTS;
+    }
     Node *node = find(customers[hash(c_id)], c_id);
     if (node == nullptr) {
         return DOESNT_EXISTS;
@@ -277,6 +280,9 @@ Output_t<bool> HashTable::is_member(int c_id) const
 {
     if(c_id < 0) {
         return INVALID_INPUT;
+    }
+    if (size == 0) {
+        return DOESNT_EXISTS;
     }
     Node *node = find(customers[hash(c_id)], c_id);
     if (node == nullptr) {
@@ -290,8 +296,10 @@ StatusType HashTable::make_member(int c_id)
     if(c_id < 0) {
         return INVALID_INPUT;
     }
-    int h = hash(c_id);
-    Node *node = find(customers[h], c_id);
+    if ( size == 0) {
+        return DOESNT_EXISTS;
+    }
+    Node *node = find(customers[hash(c_id)], c_id);
     if (node == nullptr) {
         return DOESNT_EXISTS;
     }
