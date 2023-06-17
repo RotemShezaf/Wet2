@@ -1,7 +1,6 @@
 #include "hashTable.h"
 #include <new>
 #ifdef TEST
-#include <algorithm>
 #include <iostream>
 #endif
 
